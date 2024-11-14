@@ -1,7 +1,8 @@
+import Link from 'next/link';
 import Image from 'next/image';
 import { RxDashboard } from 'react-icons/rx';
+import { Bs1SquareFill } from 'react-icons/bs';
 import { SidebarMenuItem } from '.';
-import Link from 'next/link';
 
 const menuItems = [
   {
@@ -9,6 +10,12 @@ const menuItems = [
     icon: <RxDashboard size={40} />,
     title: 'Dashboard',
     subtitle: 'Data overview',
+  },
+  {
+    path: '/dashboard/counter',
+    icon: <Bs1SquareFill size={40} />,
+    title: 'Counter',
+    subtitle: 'Counter client side',
   },
 ];
 
