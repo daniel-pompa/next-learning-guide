@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { RxDashboard } from 'react-icons/rx';
-import { Bs1SquareFill } from 'react-icons/bs';
+import { Bs1SquareFill, Bs2SquareFill } from 'react-icons/bs';
 import { SidebarMenuItem } from '.';
 
 const menuItems = [
@@ -16,6 +16,12 @@ const menuItems = [
     icon: <Bs1SquareFill size={40} />,
     title: 'Counter',
     subtitle: 'Counter client side',
+  },
+  {
+    path: '/dashboard/pokemons',
+    icon: <Bs2SquareFill size={40} />,
+    title: 'Pokemons',
+    subtitle: 'Static generation',
   },
 ];
 
