@@ -1,19 +1,24 @@
+import { SimpleWidget } from '@/components';
 import { Metadata } from 'next';
 import { FaCog, FaDatabase, FaServer, FaSyncAlt } from 'react-icons/fa';
 
 export const metadata: Metadata = {
-  title: 'Home',
+  title: 'Dashboard',
   description:
-    'The main page of the website, providing an introduction and detailed content on various topics.',
+    'The Admin Dashboard provides an overview of key features and technologies used in the application, including server-side rendering, dynamic generation, static page optimization, and global state management with Redux Toolkit. Explore the core components designed to enhance performance, scalability, and maintainability.',
 };
 
-export default function Home() {
+export default function Dashboard() {
   return (
     <div className='container-page'>
       <h1>Dashboard Overview</h1>
       <p className='text-slate-600 text-center -mt-5'>
         Explore the core features and technologies used in the application.
       </p>
+      {/* Widgets */}
+      <div className='flex flex-wrap items-center justify-center mt-10'>
+        <SimpleWidget />
+      </div>
       {/* Dashboard Grid */}
       <div className='grid grid-cols-1 md:grid-cols-2 gap-10 mt-14 leading-relaxed'>
         {/* Card 1: Server-Side and Client-Side Rendering */}
