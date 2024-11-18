@@ -7,6 +7,15 @@ interface PokemonPageProps {
   params: Promise<{ id: string }>;
 }
 
+// Build time
+export async function generateStaticParams() {
+  const static150Pokemons = Array.from({ length: 150 }, (_, index) => ({
+    id: (index + 1).toString(),
+  }));
+
+  return static150Pokemons.map(pokemon => ({ id: pokemon.id }));
+}
+
 // Convert height from decimeters to feet and inches
 const convertHeight = (height: number): string => {
   const inches = height * 4; // 1 dm = 10 cm, 1 inch = 2.54 cm, so 10 cm = 3.937 inches
@@ -43,11 +52,12 @@ export async function generateMetadata({ params }: PokemonPageProps): Promise<Me
 const getPokemon = async (id: string): Promise<PokemonResponse | null> => {
   try {
     const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
-    const response = await fetch(url);
+    const response = await fetch(url, { next: { revalidate: 60 * 60 * 30 * 6 } });
     if (!response.ok) {
       return null;
     }
     const data: PokemonResponse = await response.json();
+
     return data;
   } catch (error) {
     console.error('Error fetching Pokemon:', error);
@@ -133,9 +143,7 @@ export default async function Pokemon({ params }: PokemonPageProps) {
                 key={stat.stat.name}
                 className='bg-gradient-to-r from-blue-50 to-blue-100 p-3 rounded-md shadow-xl text-center'
               >
-                <h3 className='text-slate-600 font-semibold mb-2'>
-                  {stat.stat.name}
-                </h3>
+                <h3 className='text-slate-600 font-semibold mb-2'>{stat.stat.name}</h3>
                 <p className='text-lg md:text-xl text-slate-900'>{stat.base_stat}</p>
               </div>
             ))}
