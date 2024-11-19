@@ -1,4 +1,4 @@
-import { SimpleWidget } from '@/components';
+import { WidgetsGrid } from '@/components';
 import { Metadata } from 'next';
 import { FaCog, FaDatabase, FaServer, FaSyncAlt } from 'react-icons/fa';
 
@@ -16,9 +16,7 @@ export default function Dashboard() {
         Explore the core features and technologies used in the application.
       </p>
       {/* Widgets */}
-      <div className='flex flex-wrap items-center justify-center mt-10'>
-        <SimpleWidget />
-      </div>
+      <WidgetsGrid />
       {/* Dashboard Grid */}
       <div className='grid grid-cols-1 md:grid-cols-2 gap-10 mt-14 leading-relaxed'>
         {/* Card 1: Server-Side and Client-Side Rendering */}

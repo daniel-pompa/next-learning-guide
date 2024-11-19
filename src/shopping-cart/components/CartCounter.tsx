@@ -1,5 +1,7 @@
 'use client';
-import { useState } from 'react';
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { decrement, increment, initCounterState } from '@/store/counter/counterSlice';
 import { FaMinus, FaPlus, FaShoppingCart } from 'react-icons/fa';
 
 interface CartCounterProps {
@@ -7,10 +9,12 @@ interface CartCounterProps {
 }
 
 export const CartCounter = ({ value = 0 }: CartCounterProps) => {
-  const [count, setCount] = useState(value);
+  const count = useAppSelector(state => state.counter.value);
+  const dispatch = useAppDispatch();
 
-  const increment = () => setCount(count + 1);
-  const decrement = () => setCount(count > 0 ? count - 1 : 0);
+  useEffect(() => {
+    dispatch(initCounterState(value));
+  }, [value, dispatch]);
 
   return (
     <div className='relative bg-slate-50 rounded-xl shadow-xl p-6 max-w-md mx-auto min-h-48 border border-slate-200'>
@@ -26,14 +30,14 @@ export const CartCounter = ({ value = 0 }: CartCounterProps) => {
       {/* Counter */}
       <div className='flex items-center justify-center space-x-8 mt-6'>
         <button
-          onClick={decrement}
+          onClick={() => dispatch(decrement())}
           className='w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-blue-500 hover:bg-blue-600 text-slate-50'
         >
           <FaMinus />
         </button>
         <span className='text-xl md:text-4xl text-slate-800'>{count}</span>
         <button
-          onClick={increment}
+          onClick={() => dispatch(increment())}
           className='w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-blue-500 hover:bg-blue-600 text-slate-50'
         >
           <FaPlus />
