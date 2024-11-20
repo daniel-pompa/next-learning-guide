@@ -1,8 +1,8 @@
 import { Metadata } from 'next';
-import { PokemonGrid } from '@/pokemons';
+import { FavoritePokemon } from '@/pokemons';
 
 export const metadata: Metadata = {
-  title: 'Favorites',
+  title: 'Favorite Pokémons',
   description:
     'Browse a collection of favorite Pokémon fetched from the PokeAPI, featuring essential information about each Pokémon.',
 };
@@ -10,10 +10,8 @@ export const metadata: Metadata = {
 export default async function Pokemons() {
   return (
     <div className='container-page'>
-      <h1>
-        Pokémon Favorites
-      </h1>
-      <PokemonGrid pokemons={[]} />
+      <h1>Favorite Pokémon</h1>
+      <FavoritePokemon />
     </div>
   );
 }

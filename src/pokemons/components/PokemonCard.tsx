@@ -1,7 +1,10 @@
+'use client';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Pokemon } from '../interfaces/pokemon';
-import { IoHeartOutline } from 'react-icons/io5';
+import { IoHeart, IoHeartOutline } from 'react-icons/io5';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { toggleFavorite } from '@/store/pokemons/pokemonsSlice';
 
 interface PokemonCardProps {
   pokemon: Pokemon;
@@ -9,6 +12,12 @@ interface PokemonCardProps {
 
 export const PokemonCard = ({ pokemon }: PokemonCardProps) => {
   const { id, name } = pokemon;
+  const isFavorite = useAppSelector(state => !!state.pokemons[id]);
+  const dispatch = useAppDispatch();
+
+  const handleToggleFavorite = () => {
+    dispatch(toggleFavorite(pokemon));
+  };
 
   return (
     <div className='mx-auto mt-2 w-60 h-80'>
@@ -33,20 +42,24 @@ export const PokemonCard = ({ pokemon }: PokemonCardProps) => {
           </div>
         </div>
         <div className='border-b'>
-          <Link
-            href='/dashboard/main'
-            className='px-4 py-2 hover:bg-slate-100 flex items-center'
+          <div
+            className='px-4 py-2 hover:bg-slate-100 flex items-center cursor-pointer'
+            onClick={handleToggleFavorite}
           >
             <div className='text-red-600'>
-              <IoHeartOutline size={24} />
+              {isFavorite ? <IoHeart size={24} /> : <IoHeartOutline size={24} />}
             </div>
             <div className='pl-3'>
-              <p className='text-sm font-medium text-slate-800 leading-none'>
-                Not a favorite
+              <p className='text-slate-800 leading-none mt-2'>
+                {isFavorite ? 'Is a favorite' : 'Not a favorite'}
               </p>
-              <p className='text-xs text-slate-500'>Add to favorites</p>
+              {isFavorite ? (
+                <p className='text-sm text-slate-500'>Remove from favorites</p>
+              ) : (
+                <p className='text-sm text-slate-500'>Add to favorites</p>
+              )}
             </div>
-          </Link>
+          </div>
         </div>
       </div>
     </div>
