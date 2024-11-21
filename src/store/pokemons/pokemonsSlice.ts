@@ -21,7 +21,6 @@ const pokemonsSlice = createSlice({
       const { id } = pokemon;
       if (!!state.favorites[id]) {
         delete state.favorites[id];
-        // return;
       } else {
         state.favorites[id] = pokemon;
       }

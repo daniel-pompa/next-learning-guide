@@ -1,46 +1,39 @@
 import React from 'react';
 import Link from 'next/link';
+import { FaArrowRight } from 'react-icons/fa';
 
-interface SimpleWidgetProps {
+interface WidgetProps {
   title: string;
   subtitle?: string;
-  label?: string;
+  count: string | number;
   icon?: React.ReactNode;
   href?: string;
 }
 
-export const SimpleWidget = ({
-  title,
-  subtitle,
-  label,
-  icon,
-  href,
-}: SimpleWidgetProps) => {
+export const SimpleWidget = ({ title, subtitle, count, icon, href }: WidgetProps) => {
   return (
-    <div className='bg-white shadow-xl p-3 sm:min-w-[25%] min-w-full rounded-lg border-1 border-slate-50 mx-2'>
-      <div className='flex flex-col'>
-        {label && (
-          <div>
-            <h2 className='text-slate-600 text-center'>{label}</h2>
-          </div>
-        )}
-        <div>
-          <div className='flex flex-row items-center justify-center space-x-1'>
-            {icon}
-            <div id='temp' className='text-center mt-4'>
-              <h2>{title}</h2>
-              {subtitle && <p className='text-slate-500'>{subtitle}</p>}
-            </div>
-          </div>
+    <div className='bg-gradient-to-br from-blue-100 via-white to-blue-50 shadow-xl py-6 px-4 sm:min-w-80 min-w-full rounded-lg border border-slate-200 mx-3 mb-5 md:mb-0'>
+      <div className='flex flex-col items-center space-y-4'>
+        {/* Icon */}
+        <div className='bg-blue-100 p-3 rounded-full shadow-md'>{icon}</div>
+        {/* Title, subtitle and count */}
+        <div className='text-center'>
+          <h2 className='text-blue-600'>{title}</h2>
+          {subtitle && <p className='text-slate-500'>{subtitle}</p>}
+          <p className='text-2xl md:text-3xl'>{count}</p>
         </div>
-        {href && (
-          <div className='w-full place-items-end text-right border-t-2 border-slate-100 mt-2'>
-            <Link href={href} className='text-blue-500 text-xs font-medium'>
-              More
-            </Link>
-          </div>
-        )}
       </div>
+      {/* Link */}
+      {href && (
+        <div className='text-right'>
+          <Link
+            href={href}
+            className='text-blue-600 text-sm font-medium hover:text-blue-800 transition-colors hover:underline inline-flex items-center'
+          >
+            More <FaArrowRight size={10} className='ml-1' />
+          </Link>
+        </div>
+      )}
     </div>
   );
 };
