@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { PokemonResponse } from '@/pokemons';
+import { convertHeight, convertWeight } from '@/utils';
 
 interface PokemonPageProps {
   params: Promise<{ id: string }>;
@@ -15,20 +16,6 @@ export async function generateStaticParams() {
 
   return static150Pokemons.map(pokemon => ({ id: pokemon.id }));
 }
-
-// Convert height from decimeters to feet and inches
-const convertHeight = (height: number): string => {
-  const inches = height * 4; // 1 dm = 10 cm, 1 inch = 2.54 cm, so 10 cm = 3.937 inches
-  const feet = Math.floor(inches / 12);
-  const remainingInches = Math.round(inches % 12);
-  return `${feet}' ${remainingInches}"`;
-};
-
-// Convert weight from hectograms to lbs
-const convertWeight = (weight: number): string => {
-  const lbs = (weight * 0.22).toFixed(1); // 1 hg = 0.22 lbs
-  return `${lbs} lbs`;
-};
 
 export async function generateMetadata({ params }: PokemonPageProps): Promise<Metadata> {
   const { id } = await params;

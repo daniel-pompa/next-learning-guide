@@ -2,6 +2,8 @@ import Image from 'next/image';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { PokemonResponse, PokemonsResponse } from '@/pokemons';
+import { convertHeight, convertWeight } from '@/utils';
+import { BackButton } from '@/components';
 
 interface PokemonPageProps {
   params: Promise<{ name: string }>;
@@ -9,47 +11,15 @@ interface PokemonPageProps {
 
 // Build time
 export async function generateStaticParams() {
-  const url = 'https://pokeapi.co/api/v2/pokemon?limit=150';
+  const url = 'https://pokeapi.co/api/v2/pokemon?limit=500';
   const response = await fetch(url);
   const data: PokemonsResponse = await response.json();
 
-  // Map API results to extract Pokémon ID and name
   const pokemons = data.results.map(pokemon => ({
     name: pokemon.name,
   }));
 
   return pokemons.map(pokemon => ({ name: pokemon.name }));
-}
-
-// Convert height from decimeters to feet and inches
-const convertHeight = (height: number): string => {
-  const inches = height * 4; // 1 dm = 10 cm, 1 inch = 2.54 cm, so 10 cm = 3.937 inches
-  const feet = Math.floor(inches / 12);
-  const remainingInches = Math.round(inches % 12);
-  return `${feet}' ${remainingInches}"`;
-};
-
-// Convert weight from hectograms to lbs
-const convertWeight = (weight: number): string => {
-  const lbs = (weight * 0.22).toFixed(1); // 1 hg = 0.22 lbs
-  return `${lbs} lbs`;
-};
-
-export async function generateMetadata({ params }: PokemonPageProps): Promise<Metadata> {
-  const { name } = await params;
-  const pokemon = await getPokemon(name);
-
-  if (!pokemon) {
-    return {
-      title: 'Pokemon Not Found',
-      description: 'The specified Pokémon could not be found.',
-    };
-  }
-
-  return {
-    title: `${name.charAt(0).toUpperCase() + name.slice(1)}`,
-    description: `Detailed information about ${name}`,
-  };
 }
 
 // Fetches a single Pokémon's data from the PokeAPI by its ID
@@ -69,9 +39,27 @@ const getPokemon = async (name: string): Promise<PokemonResponse | null> => {
   }
 };
 
+export async function generateMetadata({ params }: PokemonPageProps): Promise<Metadata> {
+  const { name } = await params;
+  const pokemon = await getPokemon(name);
+
+  if (!pokemon) {
+    return {
+      title: 'Pokemon Not Found',
+      description: 'The specified Pokémon could not be found.',
+    };
+  }
+
+  return {
+    title: `${name.charAt(0).toUpperCase() + name.slice(1)}`,
+    description: `Detailed information about ${name}`,
+  };
+}
+
 export default async function Pokemon({ params }: PokemonPageProps) {
   const { name } = await params;
   const pokemon = await getPokemon(name);
+
   if (!pokemon) {
     notFound();
   }
@@ -93,6 +81,9 @@ export default async function Pokemon({ params }: PokemonPageProps) {
             priority
           />
         </div>
+        {/* Button to navigate back */}
+        <BackButton />
+        <h2 className='mb-4'>Attributes</h2>
         {/* Weight, Height, Types and Abilities */}
         <div className='grid grid-cols-1 md:grid-cols-2 gap-6 mb-8'>
           {/* Weight */}
@@ -138,6 +129,7 @@ export default async function Pokemon({ params }: PokemonPageProps) {
             </div>
           </div>
         </div>
+
         {/* Stats Table */}
         <div className='mb-8'>
           <h2 className='mb-4'>Stats</h2>
@@ -153,6 +145,7 @@ export default async function Pokemon({ params }: PokemonPageProps) {
             ))}
           </div>
         </div>
+
         {/* Moves */}
         <div>
           <h2 className='mb-4'>Moves</h2>
