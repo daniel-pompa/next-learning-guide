@@ -3,6 +3,7 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { PokemonResponse } from '@/pokemons';
 import { convertHeight, convertWeight } from '@/utils';
+import { BackButton } from '@/components';
 
 interface PokemonPageProps {
   params: Promise<{ id: string }>;
@@ -76,6 +77,8 @@ export default async function Pokemon({ params }: PokemonPageProps) {
             priority
           />
         </div>
+        {/* Button to navigate back */}
+        <BackButton />
         {/* Weight, Height, Types and Abilities */}
         <div className='grid grid-cols-1 md:grid-cols-2 gap-6 mb-8'>
           {/* Weight */}
