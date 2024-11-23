@@ -67,16 +67,36 @@ This project utilizes the following technologies:
 ├───📁 src/
 │   ├───📁 app/
 │   │   ├───📁 dashboard/
+│   │   │   ├───📁 counter/
+│   │   │   ├───📁 favorites/
 │   │   │   ├───📁 main/
+│   │   │   ├───📁 pokemon/
+│   │   │   │   └───📁 [id]/
+│   │   │   ├───📁 pokemons/
+│   │   │   │   ├───📁 [name]/
 │   │   │   └───📄 layout.tsx
 │   │   ├───📁 fonts/
 │   │   ├───📄 favicon.ico
 │   │   ├───📄 globals.css
 │   │   ├───📄 layout.tsx
+│   │   ├───📄 not-found.tsx
 │   │   └───📄 page.tsx
-│   └───📁 components/
+│   ├───📁 components/
+│   ├───📁 pokemons/
+│   │   ├───📁 components/
+│   │   ├───📁 interfaces/
+│   ├───📁 shopping-cart/
+│   │   ├───📁 components/
+│   ├───📁 store/
+│   │   ├───📁 counter/
+│   │   ├───📁 middlewares/
+│   │   ├───📁 pokemons/
+│   │   ├───📄 index.ts
+│   │   └───📄 Providers.tsx
+│   └───📁 utils/
 ├───📄 .eslintrc.json
 ├───📄 LICENSE
+├───📄 next-env.d.ts
 ├───📄 next.config.ts
 ├───📄 package-lock.json
 ├───📄 package.json
@@ -85,9 +105,6 @@ This project utilizes the following technologies:
 ├───📄 tailwind.config.ts
 └───📄 tsconfig.json
 ```
-
-> [!NOTE]
-> The complete directory structure will be presented here once it is finalized. This section will detail the organization of folders and files, providing a clear overview of each component's role in the application's architecture.
 
 ## Installation
 
